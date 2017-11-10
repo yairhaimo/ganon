@@ -1,4 +1,4 @@
-package com.classmng;
+package com.ganon;
 
 import com.facebook.react.ReactActivity;
 import com.reactnativenavigation.controllers.SplashActivity;
@@ -16,6 +16,6 @@ public class MainActivity extends SplashActivity {
      * This is used to schedule rendering of the component.
      */
     protected String getMainComponentName() {
-        return "classMng";
+        return "Ganon";
     }
 }

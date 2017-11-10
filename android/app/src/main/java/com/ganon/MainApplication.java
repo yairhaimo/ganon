@@ -1,4 +1,4 @@
-package com.classmng;
+package com.ganon;
 
 import android.app.Application;
 

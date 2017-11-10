@@ -1,4 +1,4 @@
-rootProject.name = 'classMng'
+rootProject.name = 'Ganon'
 
 include ':app'
 include ':react-native-navigation'
