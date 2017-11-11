@@ -12,14 +12,12 @@ export default inject('store')(
         navBarHidden: true
       };
       render() {
-        const { numOfKids, parents, channels, name } = this.props.store;
-        if (!channels || !channels.length) {
-          return <Text>Loading</Text>;
-        }
+        const { channels } = this.props.store;
+
         return (
           <View style={styles.container}>
             <FlatList
-              data={channels}
+              data={channels.values()}
               renderItem={({ item: channel }) => (
                 <ChatRow
                   key={channel._id}

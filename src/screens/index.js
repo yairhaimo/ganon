@@ -7,34 +7,6 @@ import PicturesScreen from './Pictures';
 import ChannelScreen from './Channel';
 import rootStore from '../stores';
 
-import firebase from 'firebase';
-const firebaseConfig = {
-  apiKey: 'AIzaSyDwLj1ZbTV3fFgDWSdzVQlY509AQkT_tMk',
-  authDomain: 'ganon-a870d.firebaseapp.com',
-  databaseURL: 'https://ganon-a870d.firebaseio.com',
-  projectId: 'ganon-a870d',
-  storageBucket: 'ganon-a870d.appspot.com',
-  messagingSenderId: '434631193843'
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-// firebase
-//   .database()
-//   .ref('channels')
-//   .on('value', function(snapshot) {
-//     console.log('setting name', snapshot.val());
-//   });
-
-firebase
-  .database()
-  .ref('channels')
-  .on('child_added', function(channel) {
-    console.log('channel added', channel.val().label);
-    rootStore.addChannel(channel.val());
-  });
-
 const prefix = 'classMng';
 export const SCREENS = {
   WRAPPER: `${prefix}.Wrapper`,

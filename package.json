@@ -15,7 +15,9 @@
     "react-native": "^0.50.0",
     "react-native-gifted-chat": "^0.3.0",
     "react-native-i18n": "^2.0.9",
-    "react-native-navigation": "^1.1.257"
+    "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-navigation": "^1.1.257",
+    "rn-placeholder": "^1.1.0"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",
