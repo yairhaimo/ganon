@@ -5,8 +5,9 @@ import I18n from 'react-native-i18n';
 import en from '../locales/en';
 import he from '../locales/he';
 import { NAVBAR } from './definitions';
+import rootStore from './stores';
+import { retrieveChannels } from './services/api';
 console.disableYellowBox = true;
-
 I18n.fallbacks = true;
 I18n.translations = {
   en,

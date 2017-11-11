@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, flow } from 'mobx-state-tree';
 import I18n from 'react-native-i18n';
 import Message from './message';
 import { retrieveMessages, sendMessage } from '../services/api';
@@ -9,7 +9,7 @@ export default types
     label: types.string,
     isAdminOnly: types.boolean,
     order: types.number,
-    messages: types.map(Message),
+    messages: types.maybe(types.map(Message)),
     isLoading: types.maybe(types.boolean)
   })
   .actions(self => ({
@@ -19,16 +19,13 @@ export default types
     stopLoading() {
       self.isLoading = false;
     },
-    addMessage(message) {
-      self.messages.set(message._id, message);
-    },
     sendMessage(message) {
       sendMessage(self, message);
     },
-    async retrieveMessages() {
-      const messages = await retrieveMessages(self);
-      messages.forEach(message => self.addMessage(message.data()));
-    }
+    retrieveMessages: flow(function*() {
+      const messages = yield retrieveMessages(self);
+      messages.forEach(message => self.messages.set(message.id, message.data()));
+    })
   }))
   .views(self => ({
     get sortedMessages() {

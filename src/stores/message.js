@@ -1,9 +1,9 @@
 import { types } from 'mobx-state-tree';
-import Parent from './parent';
+import User from './user';
 
 export default types.model({
   _id: types.identifier(types.string),
   text: types.string,
   createdAt: types.Date,
-  user: types.reference(Parent)
+  user: types.reference(User)
 });

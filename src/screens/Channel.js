@@ -14,18 +14,18 @@ export default inject('store')(
         this.props.store.selectedChannel.retrieveMessages();
       }
       render() {
-        const { selectedChannel, parents } = this.props.store;
+        const { selectedChannel, currentUser } = this.props.store;
         this.props.navigator.setTitle({
           title: I18n.t(selectedChannel.label, { defaultValue: selectedChannel.label })
         });
+        // <Spinner visible={selectedChannel.isLoading} />
         return (
           <View style={styles.container}>
             <View style={styles.container}>
-              <Spinner visible={selectedChannel.isLoading} />
               <GiftedChat
                 messages={selectedChannel.sortedMessages}
                 onSend={messages => this.onSend(messages)}
-                user={parents[0]}
+                user={currentUser}
                 renderBubble={this.renderBubble}
               />
             </View>
