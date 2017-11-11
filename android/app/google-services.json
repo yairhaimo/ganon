@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "333232489553",
+    "firebase_url": "https://ganon2-97712.firebaseio.com",
+    "project_id": "ganon2-97712"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333232489553:android:33217b98603d418b",
+        "android_client_info": {
+          "package_name": "com.ganon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333232489553-j5e6gt1doknu19tv5bh4rp6vd9bkng30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjAMwUVOxWkLDAYsyO9898m24_UFEdPME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

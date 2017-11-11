@@ -4,10 +4,7 @@ import { I18nManager } from 'react-native';
 import I18n from 'react-native-i18n';
 import en from '../locales/en';
 import he from '../locales/he';
-import { init, listenToChannels, createChannel } from './services/api';
 import { NAVBAR } from './definitions';
-init();
-listenToChannels();
 console.disableYellowBox = true;
 
 I18n.fallbacks = true;
@@ -26,6 +23,10 @@ Navigation.startSingleScreenApp({
     title: 'גן ארנבון',
     navigatorStyle: NAVBAR,
     topTabs: [
+      // {
+      //   screenId: SCREENS.TEST,
+      //   title: 'Test'
+      // },
       {
         screenId: SCREENS.MESSAGES,
         title: I18n.t('screens.messages')

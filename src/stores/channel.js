@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import I18n from 'react-native-i18n';
 import Message from './message';
+import { retrieveMessages, sendMessage } from '../services/api';
 
 export default types
   .model({
@@ -19,8 +20,14 @@ export default types
       self.isLoading = false;
     },
     addMessage(message) {
-      self.stopLoading();
       self.messages.set(message._id, message);
+    },
+    sendMessage(message) {
+      sendMessage(self, message);
+    },
+    async retrieveMessages() {
+      const messages = await retrieveMessages(self);
+      messages.forEach(message => self.addMessage(message.data()));
     }
   }))
   .views(self => ({

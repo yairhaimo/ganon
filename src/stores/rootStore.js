@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import { sendMessage } from '../services/api';
+import { retrieveChannels } from '../services/api';
 import Kid from './kid';
 import Teacher from './teacher';
 import Parent from './parent';
@@ -14,11 +14,9 @@ export default types
     selectedChannel: types.maybe(types.reference(Channel))
   })
   .actions(self => ({
-    sendMessage(channelId, message) {
-      sendMessage(channelId, message);
-    },
-    addMessage(channel, message) {
-      channel.addMessage(message);
+    async retrieveChannels() {
+      const channels = await retrieveChannels();
+      channels.forEach(channel => self.addChannel(channel.data()));
     },
     addChannel(channel) {
       channel.messages = channel.messages || {};

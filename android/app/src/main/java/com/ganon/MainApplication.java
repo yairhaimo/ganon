@@ -3,12 +3,14 @@ package com.ganon;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +26,9 @@ public class MainApplication extends NavigationApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+          new RNFirebasePackage(),
+          new RNFirebaseFirestorePackage()
       );
     }
 
@@ -60,7 +64,9 @@ public class MainApplication extends NavigationApplication {
       // Add additional packages you require here
       // No need to add RnnPackage and MainReactPackage
       return Arrays.<ReactPackage>asList(
-          new RNI18nPackage()
+          new RNI18nPackage(),
+          new RNFirebasePackage(),
+          new RNFirebaseFirestorePackage()
       );
   }
 }

@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react';
 import I18n from 'react-native-i18n';
 import { COLORS } from '../definitions';
 
-export default ({ item, onClick }) => (
+export default observer(({ item, onClick }) => (
   <TouchableOpacity onPress={() => onClick(item)}>
     <View key={item._id} style={styles.wrapper}>
       <View style={styles.avatar} />
@@ -13,7 +14,7 @@ export default ({ item, onClick }) => (
       </View>
     </View>
   </TouchableOpacity>
-);
+));
 
 const styles = StyleSheet.create({
   wrapper: {
