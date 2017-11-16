@@ -1,5 +1,5 @@
 import { types, flow } from 'mobx-state-tree';
-import { retrieveChannels, retrieveUsers, retrieveKids } from '../services/api';
+import { retrieveChannels, retrieveUsers, retrieveKids, listenToMessages } from '../services/api';
 import Kid from './kid';
 // import Teacher from './teacher';
 // import Parent from './parent';
@@ -14,15 +14,18 @@ export default types
     users: types.map(User),
     channels: types.map(Channel),
     selectedChannel: types.maybe(types.reference(Channel)),
-    currentUser: types.maybe(types.reference(User))
+    currentUser: types.maybe(types.reference(User)),
+    isLoading: types.boolean
   })
   .actions(self => ({
-    afterCreate() {
-      self.retrieveChannels();
-      self
-        .retrieveKids()
-        .then(() => self.retrieveUsers())
-        .then(() => self.setCurrentUser('uYe0yGD69UzJt8npAu9k'));
+    async afterCreate() {
+      self.isLoading = true;
+      await self.retrieveChannels();
+      await self.retrieveKids();
+      await self.retrieveUsers();
+      // self.setCurrentUser('uYe0yGD69UzJt8npAu9k');
+      self.listenToMessages();
+      self.isLoading = false;
     },
     retrieveChannels: flow(function*() {
       const channels = yield retrieveChannels();
@@ -42,6 +45,17 @@ export default types
       kids.forEach(kid => self.kids.set(kid.id, kid.data()));
       // console.log('set kids', self.kids.values());
     }),
+    listenToMessages() {
+      listenToMessages(self.channels, (channel, messages) =>
+        messages.forEach(message => {
+          channel.addMessage(message);
+        })
+      );
+    },
+    retrieveMessagesForAllChannels() {
+      console.log('retrieving messages');
+      self.channels.forEach(channel => channel.retrieveMessages());
+    },
     selectChannel(channel) {
       self.selectedChannel = channel;
     },

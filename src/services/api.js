@@ -54,3 +54,11 @@ export function sendMessage(channel, message) {
     }
   });
 }
+
+export function listenToMessages(channels, cb) {
+  channels.forEach(channel =>
+    messagesRef(channel._id).onSnapshot(messages => {
+      cb(channel, messages);
+    })
+  );
+}

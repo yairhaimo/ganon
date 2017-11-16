@@ -22,9 +22,16 @@ export default types
     sendMessage(message) {
       sendMessage(self, message);
     },
+    addMessage(message) {
+      const msg = message.data();
+      // for optimistic UX
+      msg.createdAt = msg.createdAt || Date.now();
+      self.messages.set(message.id, msg);
+    },
     retrieveMessages: flow(function*() {
       const messages = yield retrieveMessages(self);
-      messages.forEach(message => self.messages.set(message.id, message.data()));
+      console.log('got messages', messages);
+      messages.forEach(message => self.addMessage(message));
     })
   }))
   .views(self => ({
