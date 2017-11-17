@@ -14,19 +14,9 @@ export default types
     users: types.map(User),
     channels: types.map(Channel),
     selectedChannel: types.maybe(types.reference(Channel)),
-    currentUser: types.maybe(types.reference(User)),
-    isLoading: types.boolean
+    currentUser: types.maybe(types.reference(User))
   })
   .actions(self => ({
-    async afterCreate() {
-      self.isLoading = true;
-      await self.retrieveChannels();
-      await self.retrieveKids();
-      await self.retrieveUsers();
-      // self.setCurrentUser('uYe0yGD69UzJt8npAu9k');
-      self.listenToMessages();
-      self.isLoading = false;
-    },
     retrieveChannels: flow(function*() {
       const channels = yield retrieveChannels();
       channels.forEach(channel => {
@@ -34,11 +24,12 @@ export default types
         channelData.messages = channelData.messages || {};
         self.channels.set(channel.id, channelData);
       });
+      console.log('set channels', self.channels.values());
     }),
     retrieveUsers: flow(function*() {
       const users = yield retrieveUsers();
       users.forEach(user => self.users.set(user.id, user.data()));
-      // console.log('set users', self.users.values());
+      console.log('set users', self.users.values());
     }),
     retrieveKids: flow(function*() {
       const kids = yield retrieveKids();
@@ -59,10 +50,7 @@ export default types
     selectChannel(channel) {
       self.selectedChannel = channel;
     },
-    setCurrentUser: flow(function*(user) {
-      self.currentUser = user;
-      // const users = yield retrieveUsers();
-      // users.forEach(user => (self.currentUser = user.data()));
-      // console.log('set currentUser', self.currentUser);
-    })
+    setCurrentUser(user) {
+      self.currentUser = user._id;
+    }
   }));

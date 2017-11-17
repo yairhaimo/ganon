@@ -5,6 +5,5 @@ export default RootStore.create({
   // parents: {},
   users: {},
   kids: {},
-  channels: {},
-  isLoading: true
+  channels: {}
 });

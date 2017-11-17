@@ -1,12 +1,11 @@
-import { Navigation } from 'react-native-navigation';
-import { registerScreens, SCREENS } from './screens';
 import { I18nManager } from 'react-native';
 import I18n from 'react-native-i18n';
+import rootStore from './stores';
+import { registerScreens } from './screens';
 import en from '../locales/en';
 import he from '../locales/he';
-import { NAVBAR } from './definitions';
-import rootStore from './stores';
-import { retrieveChannels } from './services/api';
+import { goToOrgSelectionScreen, goToOrgScreen } from './services/navigator';
+import * as userMgr from './services/userMgr';
 console.disableYellowBox = true;
 I18n.fallbacks = true;
 I18n.translations = {
@@ -17,29 +16,20 @@ I18n.translations = {
 I18n.start = I18nManager.isRTL ? 'right' : 'left';
 I18n.end = I18nManager.isRTL ? 'left' : 'right';
 
+// userMgr.removeUser();
+
 registerScreens();
-Navigation.startSingleScreenApp({
-  screen: {
-    screen: SCREENS.WRAPPER,
-    title: 'גן ארנבון',
-    navigatorStyle: NAVBAR,
-    topTabs: [
-      // {
-      //   screenId: SCREENS.TEST,
-      //   title: 'Test'
-      // },
-      {
-        screenId: SCREENS.MESSAGES,
-        title: I18n.t('screens.messages')
-      },
-      {
-        screenId: SCREENS.PICTURES,
-        title: I18n.t('screens.pictures')
-      },
-      {
-        screenId: SCREENS.PEOPLE,
-        title: I18n.t('screens.people')
-      }
-    ]
+async function init() {
+  console.log('init');
+  const userDefinition = await userMgr.getUser();
+  await rootStore.retrieveChannels();
+  await rootStore.retrieveUsers();
+  rootStore.listenToMessages();
+  if (!userDefinition) {
+    goToOrgSelectionScreen();
+  } else {
+    rootStore.setCurrentUser(userDefinition);
+    goToOrgScreen();
   }
-});
+}
+init();

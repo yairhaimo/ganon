@@ -2,6 +2,11 @@ import rootStore from '../stores';
 import firebase from 'react-native-firebase';
 const orgId = 'sSA2sH9kbwIfRsoMoYqE';
 
+firebase
+  .messaging()
+  .getToken()
+  .then(token => console.log('token is', token));
+
 function baseRef() {
   return firebase
     .firestore()
